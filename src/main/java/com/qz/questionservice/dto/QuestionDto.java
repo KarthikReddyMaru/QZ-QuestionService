@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class QuestionDto {
+public class QuestionDto implements Dto {
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private int questionId;
     private String question;

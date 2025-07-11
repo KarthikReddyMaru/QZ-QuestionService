@@ -3,6 +3,7 @@ package com.qz.questionservice.controller;
 import com.qz.questionservice.constants.Category;
 import com.qz.questionservice.constants.Difficulty;
 import com.qz.questionservice.dto.QuestionDto;
+import com.qz.questionservice.dto.QuestionResponseDto;
 import com.qz.questionservice.exception.QuestionNotFound;
 import com.qz.questionservice.service.QuestionService;
 import lombok.AllArgsConstructor;
@@ -67,5 +68,12 @@ public class QuestionController {
     public ResponseEntity<List<Integer>> findQuestionIdsByCategoryAndDifficulty(
             Category category, int numberOfQuestions, Difficulty difficulty) {
         return ResponseEntity.ok(questionService.findQuestionIdsByCategoryAndDifficulty(category, numberOfQuestions, difficulty));
+    }
+
+    @PostMapping("/calculate")
+    public ResponseEntity<Integer> calculateScore(@RequestBody List<QuestionResponseDto> responses) {
+        int totalScore = questionService.calculateScore(responses);
+        log.info("Total score {}", totalScore);
+        return ResponseEntity.ok(totalScore);
     }
 }

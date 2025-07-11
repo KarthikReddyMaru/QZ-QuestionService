@@ -3,16 +3,20 @@ package com.qz.questionservice.service;
 import com.qz.questionservice.constants.Category;
 import com.qz.questionservice.constants.Difficulty;
 import com.qz.questionservice.dto.QuestionDto;
+import com.qz.questionservice.dto.QuestionResponseDto;
 import com.qz.questionservice.dto.mapper.QuestionMapper;
 import com.qz.questionservice.exception.QuestionNotFound;
 import com.qz.questionservice.model.Question;
 import com.qz.questionservice.repo.QuestionRepo;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -72,4 +76,20 @@ public class QuestionService {
         Question question = mapper.mapToEntity(questionDto);
         return Optional.of(questionRepo.save(question).getId()).orElseThrow(() -> new RuntimeException("Update failed"));
     }
+
+    @Transactional(readOnly = true)
+    public Integer calculateScore(List<QuestionResponseDto> responses) {
+        List<Integer> questionIds = responses.stream().map(QuestionResponseDto::getId).toList();
+        Map<Integer, Question> questions = questionRepo.findAllById(questionIds).stream()
+                .collect(Collectors.toUnmodifiableMap(Question::getId, Function.identity()));
+        int totalScore = 0;
+        for(QuestionResponseDto response : responses) {
+            int questionId = response.getId();
+            Question actualQuestion = questions.get(questionId);
+            if(actualQuestion.getCorrectAnswer().equals(response.getSelectedAnswer()))
+                totalScore += actualQuestion.getDifficulty().getScore();
+        }
+        return totalScore;
+    }
+
 }
