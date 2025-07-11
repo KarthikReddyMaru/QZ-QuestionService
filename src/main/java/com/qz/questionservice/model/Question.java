@@ -1,5 +1,6 @@
 package com.qz.questionservice.model;
 
+import com.qz.questionservice.constants.Category;
 import com.qz.questionservice.constants.Difficulty;
 import com.qz.questionservice.convertor.ListToStringConvertor;
 import jakarta.persistence.*;
@@ -26,13 +27,15 @@ public class Question extends Auditable {
 
     @Column(nullable = false)
     @Convert(converter = ListToStringConvertor.class)
+    @Lob
     private List<String> options;
 
     @Column(nullable = false)
     private String correctAnswer;
 
     @Column(nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

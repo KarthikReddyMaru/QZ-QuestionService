@@ -1,4 +1,4 @@
-package com.qz.questionservice.mapper;
+package com.qz.questionservice.dto.mapper;
 
 import com.qz.questionservice.dto.ErrorResponse;
 

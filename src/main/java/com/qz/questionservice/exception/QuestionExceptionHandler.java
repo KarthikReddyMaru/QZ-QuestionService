@@ -1,7 +1,7 @@
 package com.qz.questionservice.exception;
 
 import com.qz.questionservice.dto.ErrorResponse;
-import com.qz.questionservice.mapper.ExceptionToErrorResponse;
+import com.qz.questionservice.dto.mapper.ExceptionToErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

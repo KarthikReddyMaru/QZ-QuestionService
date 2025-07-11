@@ -1,5 +1,6 @@
 package com.qz.questionservice.config;
 
+import com.qz.questionservice.constants.Category;
 import com.qz.questionservice.constants.Difficulty;
 import com.qz.questionservice.model.Question;
 import com.qz.questionservice.repo.QuestionRepo;
@@ -20,7 +21,7 @@ public class BootConfig {
                 q.setQuestion("Question "+i);
                 q.setOptions(List.of("Option 1","Option 2","Option 3","Option 4"));
                 q.setCorrectAnswer("Option 3");
-                q.setCategory("Test");
+                q.setCategory(Category.Java);
                 double random = Math.random();
                 if(random < 0.4)
                     q.setDifficulty(Difficulty.EASY);

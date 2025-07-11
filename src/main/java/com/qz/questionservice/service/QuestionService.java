@@ -1,9 +1,8 @@
 package com.qz.questionservice.service;
 
-import com.qz.questionservice.constants.Difficulty;
 import com.qz.questionservice.dto.QuestionDto;
 import com.qz.questionservice.exception.QuestionNotFound;
-import com.qz.questionservice.mapper.QuestionToQuestionDto;
+import com.qz.questionservice.dto.mapper.QuestionToQuestionDto;
 import com.qz.questionservice.model.Question;
 import com.qz.questionservice.repo.QuestionRepo;
 import lombok.AllArgsConstructor;
@@ -34,4 +33,19 @@ public class QuestionService {
         return mapper.map(question.orElseThrow(() -> new QuestionNotFound("No Question with ID " + id + " found"))); // Will throw later
     }
 
+    public List<QuestionDto> findQuestionsByIds(List<Integer> questionIds) {
+        List<Question> questions = questionRepo.findAllById(questionIds);
+        return questions
+                .stream()
+                .map(mapper::map)
+                .toList();
+    }
+    
+    public List<Integer> findQuestionIdsByCategory(String category, int numberOfQuestions) {
+        List<QuestionDto> questions = findQuestionsByCategory(category, numberOfQuestions);
+        return questions
+                .stream()
+                .map(QuestionDto::getQuestionId)
+                .toList();
+    }
 }

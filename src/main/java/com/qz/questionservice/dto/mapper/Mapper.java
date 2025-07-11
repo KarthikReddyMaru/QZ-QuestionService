@@ -1,4 +1,4 @@
-package com.qz.questionservice.mapper;
+package com.qz.questionservice.dto.mapper;
 
 public interface Mapper<T, V> {
     V map(T obj);
