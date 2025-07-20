@@ -16,7 +16,6 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/question")
 @AllArgsConstructor
 public class QuestionController {
 
